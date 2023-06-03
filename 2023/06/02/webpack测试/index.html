@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Hexo</title><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link href="/css/bootstrap.min.css" rel="stylesheet"><link href="/css/font-awesome.min.css" rel="stylesheet"><link href="/css/main.css" rel="stylesheet"><meta name="generator" content="Hexo 6.3.0"></head><body><div class="wrap"><nav class="page-navigation"><div class="nav-container"><div class="page-header-logo"><h1 class="prince-log"><a href="/" class="home-link">Hello</a></h1></div><button type="button" data-toggle="collapse" data-target=".main-nav-items" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><ul class="collapse navbar-collapse main-nav-items"><li class="menu-item"><a href="/" target="_self">HOME</a></li><li class="menu-item"><a href="/archives/" target="_self">ARCHIVE</a></li><li class="menu-item"><a href="/about/" target="_self">ABOUT</a></li></ul></div></nav><main class="prince-container"><div class="post"><article class="post-block"><h1 class="post-title">webpack测试</h1><div class="post-info">Jun 2nd 2023</div><div class="post-entry"><p>webpack使用：<br>  案例说明：<br>    编写ES6 Moudle代码，<br>    由于浏览器并不认识，就无法解析，<br>    我们可以使用webpack来编译使浏览器认识。</p>
+<p>一、环境准备工作：<br>  1.输入命令node -v  查看node的版本号<br>  2.输入命令npm -v   查看npm的版本号<br>  3.输入命令：webpack -v 查看webpack的版本号<br>  以上三个指令均可正常运行再执行下面操作</p>
+<p>二、项目准备工作：<br>  1.在d盘&#x2F;桌面新建文件夹：vuecildemo，存放项目代码</p>
+<p>  2.在vscode打开刚才新建的文件夹，<br>    在文件夹内部新建文件夹：day01webpack</p>
+<p>  3.在day01webpack文件夹下分别新建：<br>      1.src目录：存放项目主要js代码<br>      2.dist目录：存放打包后的代码<br>      3.主运行文件：index.html</p>
+<p>三、项目代码编写：<br>  1.在src下新建两个js：test.js、index.js</p>
+<p>  2.在test.js中编写hello两个方法,<br>  function hello(){<br>    console.log(“hello,world…”)<br>  }</p>
+<p>  使用module导出：<br>   module.exports &#x3D; {hello};</p>
+<p>  3.在index.js中导入test.js<br>    const {hello} &#x3D; require(“.&#x2F;test”);<br>    并调用：<br>       hello();</p>
+<p>  4.在主文件：index.html中引用index.js</p>
+<p>  5.尝试运行：运行失败,错误：require is not defined</p>
+<p>四、使用webpack将项目进行打包<br>  1.选中项目，右键open in integrated terminal,打开控制台</p>
+<pre><code>控制台路径：
+C:\Users\Hi\Desktop\day01webpack&gt;
+运行：get-ExecutionPolicy
+get-ExecutionPolicy（获取当前会话中的执行策略）
+
+如果是:Restricted（有限的），则表示禁止，
+则需以管理员的方式打开vscode运行该指令
+再运行：set-ExecutionPolicy RemoteSigned；
+
+如果是：RemoteSigned(远程签名)
+则继续向下执行
+</code></pre>
+<p>  2.运行：npm init<br>    初始化后的文件夹,里面只有一个json文件</p>
+<pre><code>以下信息可直接回车跳过
+package name: (day01webpack)
+version: (1.0.0)
+description:
+entry point: (index.js)
+test command:
+git repository:
+keywords:
+author:
+license: (ISC)
+</code></pre>
+<p>  3.运行： npm install webpack –save-dev<br>    多了 node_modules 这个文件</p>
+<p>  4.全局安装：npm install –save-dev webpack-cli -g</p>
+<p>  5.运行：npm install -D webpack-cli</p>
+<p>  6.修改：<br>     npm init 创建的package.json文件，<br>     在scripts中添加：<br>    “dev”: “webpack –mode deveplopment”,<br>    “build”: “webpack –mode production”</p>
+<p>五、测试<br>  1.运行（需要切换到src目录）：<br>    npx webpack .&#x2F;index.js -o ..&#x2F;dist –mode development</p>
+<p>  2.修改index.html中js的引用为dist下的index.js</p>
+<p>  3.运行</p>
+<p>注：打包发布后，则以后修改代码都需要重新打包发布<br>重新执行：<br>npx webpack .&#x2F;index.js -o ..&#x2F;dist –mode development</p>
+<p>除非运行实时监听的插件</p>
+<p>  六、总结：<br>   通过以上按钮我们可以简单理解一下webpakc的基本概念(静态模块打包器)就是将webpack中各种模块资源进行打包合并成一个或多个包.<br>如我们的index.js和text.js的内容就都打包在了dist文件夹下的main.js中</p>
+<p>   什么场景下用?<br>    如果你正在用许多非代码的静态资源（比如CSS，图像，字体等）构建一个复杂<br>的前端应用程序，那么Webpack会给你带来很大的好处。</p>
+<pre><code>如果你的应用程序非常小，并且你没有什么的静态资源，
+</code></pre>
+<p>并且你只需要一个JS文件就足够客户端需求，那么Webpack就没有必要使用。</p>
+<p>webpack的好处：<br>清晰简明的模块。一个稍微有点规模的应用往往有着一个复杂的资源关系网，<br>在需要做优化的时候就会使一件非常的头疼的事情。<br>webpack可以代替你做这个麻烦事，<br>将复杂的多个文件打包成你希望的代码模块，引入会非常清晰，<br>想对引入文件做点什么操作也会更容易。<br>代码拆分来做资源异步加载。<br>webpack打包成一个模块之后也带来一个问题，如果加载模块过于庞大，<br>加载的速度就没法保证，所以webpack也提供了拆分代码后异步加载的方式，<br>即先加载某个主要模块，当用到某个需要资源异步加载的模块时在对其发送请求加载，这样做在大型项目中很常见。<br>消除对未引用资源的依赖。<br>在复杂应用又多静态资源的情况下会减少很多无效的浪费，<br>这会对应用的有很大提升。可以控制资源的处理方式。</p>
+</div></article></div><div class="post-nav"></div></main></div><footer><div class="copyright"><p>Crafted with <i class="fa fa-heart"></i> by&nbsp;Hello&nbsp;|&nbsp;<a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yiliashaw/hexo-theme-prince" target="_blank">Prince</a> by SHAW</p></div></footer><script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><script src="/js/bootstrap.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.js"></script><script src="/js/script.js"></script></body></html>
